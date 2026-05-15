@@ -7,4 +7,4 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
-map("n", "<ESC>", "<CMD> nollsearch <CR>")
+map("n", "<ESC>", "<CMD> nohlsearch <CR>")

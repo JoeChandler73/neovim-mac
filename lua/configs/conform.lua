@@ -1,12 +1,10 @@
-local mason_bin = vim.fn.expand "$MASON/bin"
-
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     css = { "prettier" },
     scss = { "prettier" },
     html = { "prettier" },
-    cs = { "charpier" },
+    cs = { "dotnet_format" },
     javascript = { "prettier" },
     typescript = { "prettier" },
     json = { "prettier" },
@@ -14,19 +12,38 @@ local options = {
     yaml = { "prettier" },
     sh = { "shfmt" },
     bash = { "shfmt" },
+    xml = { "prettier" },
   },
+
   formatters = {
-    csharpier = {
-      command = mason_bin .. "/" .. "csharpier",
+    dotnet_format = {
+      command = "dotnet",
+      args = function(ctx)
+        local filename = ctx.filename or vim.api.nvim_buf_get_name(0)
+
+        return {
+          "format",
+          "--include",
+          filename,
+          "--verbosity",
+          "quiet",
+        }
+      end,
+      stdin = false,
     },
-    args = {
-      "format",
-      "--write-stdout",
+    prettier = {
+      condition = function(ctx)
+        local f = ctx.filename or ""
+
+        return vim.tbl_contains({
+          "xml",
+        }, ctx.filetype) or f:match "%.props$" or f:match "%.csproj$" or f:match "%.targets$"
+      end,
     },
-    to_stdin = true,
   },
+
   format_on_save = {
-    timeout_ms = 500,
+    timeout_ms = 3000,
     lsp_fallback = true,
   },
 }

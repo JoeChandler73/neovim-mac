@@ -16,8 +16,16 @@ return {
 
   {
     "windwp/nvim-ts-autotag",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {},
+    ft = { "html", "xml", "javascriptreact", "typescriptreact" },
+    config = function()
+      require("nvim-ts-autotag").setup {
+        opts = {
+          enable_close = true,
+          enable_rename = true,
+          enable_close_on_slash = true,
+        },
+      }
+    end,
   },
 
   {
@@ -45,12 +53,16 @@ return {
         "razor",
         "html",
         "css",
+        "xml",
         "bash",
         "javascript",
         "json",
         "typescript",
         "yaml",
         "dockerfile",
+      },
+      autotag = {
+        enable = true,
       },
     },
   },
