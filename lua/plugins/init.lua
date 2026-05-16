@@ -19,44 +19,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require("transparent").setup {
-        extra_groups = {
-          -- main UI
-          "NormalFloat",
-          "FloatBorder",
-          "CursorLine",
-          "StatusLine",
-          "StatusLineNC",
-          "SignColumn",
-          "EndOfBuffer",
-          -- NvChad / tree
-          "NvimTreeNormal",
-          "NvimTreeNormalNC",
-          "NvimTreeWinSeparator",
-          "NvimTreeEndOfBuffer",
-        },
-      }
-
-      -- force transparency AFTER colorscheme loads
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        callback = function()
-          local groups = {
-            "Normal",
-            "NormalNC",
-            "NormalFloat",
-            "FloatBorder",
-            "SignColumn",
-            "EndOfBuffer",
-            "NvimTreeNormal",
-            "NvimTreeNormalNC",
-            "NvimTreeEndOfBuffer",
-          }
-
-          for _, group in ipairs(groups) do
-            vim.api.nvim_set_hl(0, group, { bg = "none" })
-          end
-        end,
-      })
+      require "configs.transparent"
     end,
   },
 
@@ -64,13 +27,7 @@ return {
     "windwp/nvim-ts-autotag",
     ft = { "html", "xml", "javascriptreact", "typescriptreact" },
     config = function()
-      require("nvim-ts-autotag").setup {
-        opts = {
-          enable_close = true,
-          enable_rename = true,
-          enable_close_on_slash = true,
-        },
-      }
+      require "configs.autotag"
     end,
   },
 
@@ -89,56 +46,12 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "vimdoc",
-        "lua",
-        "luadoc",
-        "c_sharp",
-        "razor",
-        "html",
-        "css",
-        "xml",
-        "bash",
-        "javascript",
-        "json",
-        "typescript",
-        "yaml",
-        "dockerfile",
-      },
-      autotag = {
-        enable = true,
-      },
-    },
+    opts = require "configs.treesitter",
   },
 
   {
     "williamboman/mason.nvim",
-    opts = {
-      registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-      },
-      ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "xmlformatter",
-        "csharpier",
-        "prettier",
-        "html-lsp",
-        "css-lsp",
-        "eslint-lsp",
-        "typescript-language-server",
-        "json-lsp",
-        "roslyn",
-        "netcoredbg",
-        "shfmt",
-        "yaml-language-server",
-        "docker-language-server",
-        "docker-compose-language-server",
-      },
-    },
+    opts = require "configs.mason",
   },
 
   {
