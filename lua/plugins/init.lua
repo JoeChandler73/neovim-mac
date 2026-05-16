@@ -32,6 +32,14 @@ return {
   },
 
   {
+    "voldikss/vim-floaterm",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>o", "<cmd>FloatermToggle<cr>", desc = "Terminal" },
+    },
+  },
+
+  {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = require "configs.conform",
